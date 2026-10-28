@@ -1,6 +1,110 @@
 * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: "Charm", cursive;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.upgrade-menu-toggle {
+	display: none;
+	position: fixed;
+	top: 2rem;
+	right: 2rem;
+	width: 60px;
+	height: 60px;
+	border-radius: 99px;
+	background-color: #2e3047;
+	cursor: pointer;
+}
+
+.upgrade-icon
+{
+	position: relative;
+	top: calc(50% - 2px);
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 32px;
+}
+
+.upgrade-icon > span,
+.upgrade-icon > span::before,
+.upgrade-icon > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background-color: #FFF;
+  transition-duration: .25s;
+}
+
+.upgrade-icon > span {
+    transform: rotate(90deg);
+}
+.upgrade-icon > span::before {
+  content: '';
+  top: -8px;
+  transform: rotate(-45deg) translate(-4px, -2px);
+  width: 20px;
+}
+.upgrade-icon > span::after {
+  content: '';
+  top: 8px;
+  transform: rotate(45deg) translate(-4px, 2px);
+  width: 20px;
+}
+.upgrade-menu-toggle.is-active .upgrade-icon > span {
+  transform: rotate(45deg);
+}
+.upgrade-menu-toggle.is-active .upgrade-icon > span::before {
+  top: 0;
+  transform: rotate(0deg) translate(0px, 0px);
+  width: 100%;
+}
+.upgrade-menu-toggle.is-active .upgrade-icon > span::after {
+  top: 0;
+  transform: rotate(90deg) translate(0px, 0px);
+  width: 100%;
+}
+
+.sidebar {
+    flex: 1 1 0;
+    max-width: 300px;
+    padding: 2rem 1rem;
+    background-image: url('images/old_paper.jpg');
+}
+
+.sidebar h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 768px) {
+	.upgrade-menu-toggle {
+		display: block;
+	}
+	.content {
+		padding-top: 8rem;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: -300px;
+		height: 100vh;
+		width: 100%;
+		max-width: 300px;
+		transition: 0.2s linear;
+        z-index: 2;
+	}
+
+	.sidebar.is-active {
+		left: 0;
+	}
 }
 
 .center {
@@ -9,12 +113,12 @@
 }
 
 .content {
+    flex: 1 1 0;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 80%;
-    margin-left: 20%;
     background-image: url('images/background.jpg');
 }
 
@@ -29,13 +133,10 @@
     border: 2px solid #3E0061;
 }
 
-.sidebar {
-    display: inline-block;
-    width: 20%;
-    height: 100vh;
-    background-image: url('images/old_paper.jpg');
-    position: fixed;
-
+@media (max-width: 1024px) {
+    .sidebar {
+        max-width: 200px;
+    }
 }
 
 .upgrade {
@@ -52,25 +153,35 @@
 
 
 
-#coin {
-    width: 25%;
-    height: 25%;
-    margin: 5% auto;
+#coin-img {
+    object-fit: contain;
+    width: 70%;
+    height: 70%;
+    margin: 25px auto;
+    transform: scale(0.8);
 }
 
-#coin:hover {
-    width: 30%;
-    height: 30%;
-    margin: 2.5% auto;
+#coin-img:hover {
+    transform: scale(1);
 }
 
-#coin:active {
-    width: 27.5%;
-    height: 27.5%;
-    margin: 3.75%;
+#coin-img:active {
+    transform: scale(0.9);
 }
 
 #coin-number-text {
-    font-size: 3rem;
-    color: white;
+    font-size: 2rem;
+    background-color: whitesmoke;
+    border: 5px solid #262626;
+    border-radius: 15px;
+    padding: 5px;
 }
+
+.coin-container {
+    background-color: white;
+    width: 50%;
+    border-radius: 25%;
+    margin: 20px auto;
+    border: 5px solid gray;
+}
+
