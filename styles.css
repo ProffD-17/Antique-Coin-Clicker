@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    font-family: "Charm", cursive;
+}
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    margin-left: 20%;
+    background-image: url('images/background.jpg');
+}
+
+.background {
+    width: 70%;
+    margin: 20px auto;
+    background-image: url('images/section_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid #3E0061;
+}
+
+.sidebar {
+    display: inline-block;
+    width: 20%;
+    height: 100vh;
+    background-image: url('images/old_paper.jpg');
+    position: fixed;
+
+}
+
+.upgrade {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    background-color: #D9B55F;
+    border-radius: 5px;
+}
+
+.upgrade:hover {
+    background-color: #BA9A49;
+}
+
+
+
+#coin {
+    width: 25%;
+    height: 25%;
+    margin: 5% auto;
+}
+
+#coin:hover {
+    width: 30%;
+    height: 30%;
+    margin: 2.5% auto;
+}
+
+#coin:active {
+    width: 27.5%;
+    height: 27.5%;
+    margin: 3.75%;
+}
+
+#coin-number-text {
+    font-size: 3rem;
+    color: white;
+}
