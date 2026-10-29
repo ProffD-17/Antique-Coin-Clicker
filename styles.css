@@ -185,3 +185,46 @@
     border: 5px solid gray;
 }
 
+
+#broke-modal-container {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+#broke-modal-container.show {
+    display: flex;
+}
+
+#broke-modal {
+    width: 600px;
+    max-width: 100%;
+    background-color: #FFF;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+#broke-modal h2 {
+    margin: 0 auto 5px;
+}
+
+#broke-modal p {
+    margin: 5px auto;
+}
+
+.button {
+    padding: 5px;
+    margin: 5px auto;
+    border-radius: 5px;
+    background-color: #6293B3;
+    border: none;
+}
