@@ -191,7 +191,7 @@
 }
 
 
-#broke-modal-container {
+.modal-container {
     background-color: rgba(0, 0, 0, 0.2);
     position: fixed;
     top: 0;
@@ -202,13 +202,14 @@
     justify-content: center;
     align-items: center;
     display: none;
+    z-index: 3;
 }
 
-#broke-modal-container.show {
+.modal-container.show {
     display: flex;
 }
 
-#broke-modal {
+.modal {
     width: 600px;
     max-width: 100%;
     background-color: #FFF;
@@ -216,13 +217,14 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    z-index: 4;
 }
 
-#broke-modal h2 {
+.modal h2 {
     margin: 0 auto 5px;
 }
 
-#broke-modal p {
+.modal p {
     margin: 5px auto;
 }
 
@@ -233,3 +235,5 @@
     background-color: #6293B3;
     border: none;
 }
+
+
