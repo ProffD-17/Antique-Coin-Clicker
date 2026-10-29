@@ -112,6 +112,7 @@ auto_clicker_upgrade_button.addEventListener('click', () => {
         }
     } else {
         show_broke_modal();
+        console.log('your broke');
     }
 });
 
@@ -131,7 +132,6 @@ let multipler_upgrade_cost = 10000;
 
 
 multiplier_upgrade_button.addEventListener('click', () => {
-    console.log('clicked');
     if (multipler_upgrade_cost <= coin_counter) {
         console.log('logic activated');
         coin_counter -= multipler_upgrade_cost;
