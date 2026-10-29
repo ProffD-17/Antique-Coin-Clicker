@@ -2,16 +2,19 @@
 const coin_img = document.querySelector('#coin-img');
 const coin_number = document.querySelector('#coin-number');
 
-const start_coins = 0;
+const start_coins = 10000;
 let coin_counter = start_coins;
 let coin_increment = 1;
+let multiplier = 1;
 
 function update_coins() {
     coin_number.innerHTML = coin_counter;
 }
+update_coins();
 
+// basic coin clicker
 coin_img.addEventListener('click', () => {
-    coin_counter += coin_increment;
+    coin_counter += coin_increment * multiplier;
     update_coins();
 });
 
@@ -41,20 +44,23 @@ function show_broke_modal() {
 }
 
 
-
+// upgrade 1 - older coin
 const older_coin_upgrade = document.querySelector('#older-coin-upgrade');
 const older_coin_upgrade_cost_text = document.querySelector('#older-coin-upgrade .upgrade-cost');
 const older_coin_upgrade_title = document.querySelector('#older-coin-upgrade .upgrade-title');
 let coin_level = 0;
 let older_coin_upgrade_cost = 10;
+let older_coin_upgrade_maxed = false;
 
-const coins_added = 10; // UPDATE WHEN NEW COIN IMGs ARE ADDED
+const coin_imgs = 10; // UPDATE WHEN NEW COIN IMGs ARE ADDED
 
-// upgrade 1 - older coin
+
 older_coin_upgrade.addEventListener('click', () => {
     if (coin_counter >= older_coin_upgrade_cost) {
-        
-// -------------------------------- TODO: show no more images and deactivate if ran out of images ----------------------------------------------------
+        if (older_coin_upgrade_maxed) {
+            return;
+        }
+
         coin_level ++;
         let coin_file_type = coin_level >= 3 ? '.jpg' : '.png' // after the first 3 they are all jpg
         coin_img.setAttribute('src', `images/coin${coin_level}${coin_file_type}`);
@@ -66,6 +72,11 @@ older_coin_upgrade.addEventListener('click', () => {
         older_coin_upgrade_cost *= 10;
         older_coin_upgrade_cost_text.innerHTML = older_coin_upgrade_cost.toString().concat(' coins');
         older_coin_upgrade_title.innerHTML = `Older Coin ${coin_level + 1}`
+
+        if (coin_level === coin_imgs - 1) {
+            older_coin_upgrade_cost_text.innerHTML = 'Max level';
+            older_coin_upgrade_maxed = true;
+        }
         
     } else {
         show_broke_modal();
@@ -106,8 +117,32 @@ auto_clicker_upgrade_button.addEventListener('click', () => {
 
 // every second add the autoclicker profits
 setInterval(() => {
-    coin_counter += auto_clicker_increment;
+    coin_counter += auto_clicker_increment * multiplier;
     update_coins();
 }, auto_clicker_delay);
 
 
+// upgrade 3 - coin multiplier
+const multiplier_upgrade_button = document.querySelector('#multiplier-upgrade');
+const multiplier_upgrade_title = document.querySelector('#multiplier-upgrade .upgrade-title');
+const multiplier_upgrade_cost_text = document.querySelector('#multiplier-upgrade .upgrade-cost');
+
+let multipler_upgrade_cost = 10000;
+
+
+multiplier_upgrade_button.addEventListener('click', () => {
+    console.log('clicked');
+    if (multipler_upgrade_cost <= coin_counter) {
+        console.log('logic activated');
+        coin_counter -= multipler_upgrade_cost;
+        update_coins();
+
+        multipler_upgrade_cost *= 10;
+        multiplier_upgrade_cost_text.innerHTML = `${multipler_upgrade_cost} coins`;
+
+        multiplier ++;
+        multiplier_upgrade_title.innerHTML = `Multiplier ${multiplier}x`;
+    } else {
+        show_broke_modal();
+    }
+});
