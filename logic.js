@@ -88,9 +88,22 @@ coin_img.addEventListener('click', () => {
     update_coins();
 });
 
+
+suffixes = ['', 'K', 'M', 'B', 'T', 'Qu', 'Qi', 'Sex', 'Sep', 'Oct', 'Non'];
 // updates the coin number on screen
 function update_coins() {
-    coin_number.innerHTML = coin_counter;
+    let coin_counter_duplicite = coin_counter;
+    let sufix_index = 0;
+    while (coin_counter_duplicite >= 100) {
+        coin_counter_duplicite /= 100;
+        sufix_index ++;
+    }
+    if (sufix_index >= suffixes.length) {
+        coin_number.innerHTML = 'You win';
+        return;
+    }
+    coin_counter_duplicite = Math.round(coin_counter_duplicite * 100) / 100; // round to 2d.p.
+    coin_number.innerHTML = `${coin_counter_duplicite} ${suffixes[sufix_index]}`;
 }
 update_coins();
 
