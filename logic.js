@@ -14,7 +14,7 @@ const general_modal_text = document.querySelector('#modal-info');
 
 close_general_modal.addEventListener('click', () => {
     general_modal_container.classList.remove('show');
-    general_modal_text = '';
+    general_modal_text.innerHTML = '';
 });
 
 function show_general_modal(text) {
