@@ -94,8 +94,8 @@ suffixes = ['', 'K', 'M', 'B', 'T', 'Qu', 'Qi', 'Sex', 'Sep', 'Oct', 'Non'];
 function update_coins() {
     let coin_counter_duplicite = coin_counter;
     let sufix_index = 0;
-    while (coin_counter_duplicite >= 100) {
-        coin_counter_duplicite /= 100;
+    while (coin_counter_duplicite >= 1000) {
+        coin_counter_duplicite /= 1000;
         sufix_index ++;
     }
     if (sufix_index >= suffixes.length) {
