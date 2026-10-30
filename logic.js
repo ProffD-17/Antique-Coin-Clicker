@@ -1,105 +1,44 @@
-// COIN CLICKER
-const coin_img = document.querySelector('#coin-img');
-const coin_number = document.querySelector('#coin-number');
+// LOGIC FOR UPGRADES, CLICKING, GAMBLING, MODALS
 
-const start_coins = 10000000000000;
-let coin_counter = start_coins;
+// general variables
+const START_COINS = 10000000000000;
+let coin_counter = START_COINS;
 let coin_increment = 1;
 let multiplier = 1;
 
-// GENERAL USE MODAL
-const general_modal_container = document.querySelector('#general-modal-container');
-const close_general_modal = document.querySelector('#close-general-modal');
-const general_modal_text = document.querySelector('#modal-info');
+// MODALS
 
-close_general_modal.addEventListener('click', () => {
-    general_modal_container.classList.remove('show');
-    general_modal_text.innerHTML = '';
+// MODAL
+const modal_container = document.querySelector('#modal-container');
+const close_modal_button = document.querySelector('#close-modal');
+const modal_text = document.querySelector('#modal-info');
+const modal_title = document.querySelector('#modal-title')
+const modal = document.querySelector('#modal');
+
+
+function close_modal() {
+    modal_container.classList.remove('show');
+    modal_title.innerHTML = '';
+    modal_text.innerHTML = '';
+    close_modal.innerHTML = '';
+}
+// close with button
+close_modal_button.addEventListener('click', close_modal);
+// close by clicking anywhere not on the modal
+modal_container.addEventListener('click', close_modal);
+// modal closing when it it clicked by not letting the modal contianer know think it has been clicked
+modal.addEventListener('click', (event) => {
+    event.stopPropagation();
 });
 
-function show_general_modal(text) {
-    general_modal_container.classList.add('show');
-    general_modal_text.innerHTML = text;
+function show_modal(title, text='', close_button_text='Close') {
+    modal_container.classList.add('show');
+    modal_title.innerHTML = title;
+    modal_text.innerHTML = text;
+    close_modal.innerHTML = close_button_text;
 }
 
-// updates the coin number on screen
-function update_coins() {
-    coin_number.innerHTML = coin_counter;
-}
-update_coins();
-
-
-// basic coin clicker
-coin_img.addEventListener('click', () => {
-    coin_counter += coin_increment * multiplier;
-    update_coins();
-});
-
-
-// UPGRADE MENU TOGGLE
-const upgrade_menue_toggle =document.querySelector('.upgrade-menu-toggle');
-const sidebar = document.querySelector('.sidebar');
-
-upgrade_menue_toggle.addEventListener('click', () => {
-    upgrade_menue_toggle.classList.toggle('is-active');
-    sidebar.classList.toggle('is-active');
-});
-
-
-// NOT ENOUGH MONEY MODAL
-const broke_modal_container = document.querySelector('#broke-modal-container');
-const close_broke_modal = document.querySelector('#close-broke-modal');
-
-close_broke_modal.addEventListener('click', () => {
-    broke_modal_container.classList.remove('show');
-});
-
-function show_broke_modal() {
-    broke_modal_container.classList.add('show');
-}
-
-
-// UPGRADES
-// upgrade 1 - older coin
-const older_coin_upgrade = document.querySelector('#older-coin-upgrade');
-const older_coin_upgrade_cost_text = document.querySelector('#older-coin-upgrade .upgrade-cost');
-const older_coin_upgrade_title = document.querySelector('#older-coin-upgrade .upgrade-title');
-let coin_level = 0;
-let older_coin_upgrade_cost = 10;
-let older_coin_upgrade_maxed = false;
-
-const coin_imgs = 10; // UPDATE WHEN NEW COIN IMGs ARE ADDED
-
-older_coin_upgrade.addEventListener('click', () => {
-    if (coin_counter >= older_coin_upgrade_cost) {
-        if (older_coin_upgrade_maxed) {
-            return;
-        }
-
-        coin_level ++;
-        let coin_file_type = coin_level >= 3 ? '.jpg' : '.png' // after the first 3 they are all jpg
-        coin_img.setAttribute('src', `images/coin${coin_level}${coin_file_type}`);
-        
-        coin_counter -= older_coin_upgrade_cost;
-        coin_number.innerHTML = coin_counter;
-
-        coin_increment *= 10;
-        older_coin_upgrade_cost *= 10;
-        older_coin_upgrade_cost_text.innerHTML = older_coin_upgrade_cost.toString().concat(' coins');
-        older_coin_upgrade_title.innerHTML = `Older Coin ${coin_level + 1}`
-
-        if (coin_level === coin_imgs - 1) {
-            older_coin_upgrade_cost_text.innerHTML = 'Max level';
-            older_coin_upgrade_maxed = true;
-        }
-        
-        show_fact();
-    } else {
-        show_broke_modal();
-    }
-})
-
-// fun fact on each coin upgrade
+// fun facts
 const antique_coin_facts = [
   "Some ancient Roman coins featured emperors who ruled for only a few months.",
   "The world's oldest coins appeared in ancient Lydia, around the 7th century BCE.",
@@ -128,21 +67,88 @@ const antique_coin_facts = [
   "Two coins minted in the same year can have very different values depending on rarity, condition, and historical significance."
 ];
 
-const fun_fact = document.querySelector('#fun-fact');
-const fact_modal_container = document.querySelector('#fact-modal-container');
-const fact_modal = document.querySelector('#fact-modal');
-const fact_modal_close = document.querySelector('#close-fact-modal');
-
 function show_fact() {
     // choose a random fact
     let random_fact = antique_coin_facts[get_random_int(antique_coin_facts.length - 1)];
-    fun_fact.innerHTML = `${random_fact}`;
-    fact_modal_container.classList.add('show');
+    show_modal('Fun Fact', random_fact, 'OK . . .');
 }
 
-fact_modal_close.addEventListener('click', () => {
-    fact_modal_container.classList.remove('show');
+// NOT ENOUGH MONEY MODAL
+function show_broke_modal() {
+    show_modal('Your broke', 'Unfortunatley you dont have enough money to complete this action.', 'Close in disapointment');
+}
+
+
+// COIN CLICKER
+const coin_img = document.querySelector('#coin-img');
+const coin_number = document.querySelector('#coin-number');
+
+coin_img.addEventListener('click', () => {
+    coin_counter += coin_increment * multiplier;
+    update_coins();
 });
+
+// updates the coin number on screen
+function update_coins() {
+    coin_number.innerHTML = coin_counter;
+}
+update_coins();
+
+
+// UPGRADE MENU TOGGLE
+const upgrade_menue_toggle =document.querySelector('.upgrade-menu-toggle');
+const sidebar = document.querySelector('.sidebar');
+
+upgrade_menue_toggle.addEventListener('click', () => {
+    upgrade_menue_toggle.classList.toggle('is-active');
+    sidebar.classList.toggle('is-active');
+});
+
+
+
+
+
+// UPGRADES
+// upgrade 1 - older coin
+const older_coin_upgrade = document.querySelector('#older-coin-upgrade');
+const older_coin_upgrade_cost_text = document.querySelector('#older-coin-upgrade .upgrade-cost');
+const older_coin_upgrade_title = document.querySelector('#older-coin-upgrade .upgrade-title');
+let coin_level = 0;
+let older_coin_upgrade_cost = 10;
+let older_coin_upgrade_maxed = false;
+
+const COIN_IMGS = 10; // UPDATE WHEN NEW COIN IMGs ARE ADDED
+
+older_coin_upgrade.addEventListener('click', () => {
+    if (coin_counter >= older_coin_upgrade_cost) {
+        if (older_coin_upgrade_maxed) {
+            return;
+        }
+
+        coin_level ++;
+        let coin_file_type = coin_level >= 3 ? '.jpg' : '.png' // after the first 3 they are all jpg
+        coin_img.setAttribute('src', `images/coin${coin_level}${coin_file_type}`);
+        
+        coin_counter -= older_coin_upgrade_cost;
+        coin_number.innerHTML = coin_counter;
+
+        coin_increment *= 10;
+        older_coin_upgrade_cost *= 10;
+        older_coin_upgrade_cost_text.innerHTML = older_coin_upgrade_cost.toString().concat(' coins');
+        older_coin_upgrade_title.innerHTML = `Older Coin ${coin_level + 1}`
+
+        if (coin_level === COIN_IMGS - 1) {
+            older_coin_upgrade_cost_text.innerHTML = 'Max level';
+            older_coin_upgrade_maxed = true;
+        }
+        
+        show_fact();
+    } else {
+        show_broke_modal();
+    }
+})
+
+
 
 
 
@@ -217,17 +223,24 @@ function get_random_int(max) {
 // GAMBLING
 const gamble_btn = document.querySelector('#gamble');
 const gamble_amount_input = document.querySelector('#gamble-amount');
-let win_chance = 90/100;
+const win_chance_text = document.querySelector('#gamble-win-chance');
+let win_chance = 1/100;
+// updates the on screen win chance
+function update_win_chance() {
+    win_chance_text.innerHTML = `${Math.round(win_chance * 100)}% Win chance`;
+}
+update_win_chance();
+
 let win_multiplier = 2;
 
 gamble_btn.addEventListener('click', () => {
     // check for invalid input
     let gamble_amount = gamble_amount_input.value;
     if (gamble_amount <= 0) {
-        show_general_modal("You can't bet that amount.");
+        show_modal("You can't bet that amount.");
         return;
     }
-    if (gamble_amount > coin_counter){
+    if (gamble_amount > coin_counter) {
         show_broke_modal();
         return;
     }
@@ -241,6 +254,40 @@ gamble_btn.addEventListener('click', () => {
         let reward = gamble_amount * win_multiplier;
         coin_counter += reward;
         update_coins();
+        show_modal('You Won!');
+    } else {
+        show_modal('You Lost.');
+    }
+});
 
+
+// Gambling upgrades
+
+// upgrade 4 - higher gambling win chance
+const gamble_win_chance_upgrade = document.querySelector('#gamble-win-chance-upgrade');
+const gamble_win_chance_upgrade_cost_text = document.querySelector('#gamble-win-chance-upgrade .upgrade-cost');
+
+let gamble_win_chance_upgrade_cost = 10;
+const WIN_CHANCE_MAX = 51;
+
+gamble_win_chance_upgrade.addEventListener('click', () => {
+    if (coin_counter >= gamble_win_chance_upgrade_cost) {
+        // exit if max chance reached
+        if (win_chance >= WIN_CHANCE_MAX/100) {
+            gamble_win_chance_upgrade_cost_text.innerHTML = 'MAX';
+            return;
+        }
+
+        // cost
+        coin_counter -= gamble_win_chance_upgrade_cost;
+        update_coins();
+        gamble_win_chance_upgrade_cost *= 10;
+        gamble_win_chance_upgrade_cost_text.innerHTML = `${gamble_win_chance_upgrade_cost} Coins`;
+
+        // change chance +1%
+        win_chance += 1/100;
+        update_win_chance();
+    } else {
+        show_broke_modal();
     }
 });
