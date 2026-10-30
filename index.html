@@ -36,7 +36,15 @@
                     <p class="upgrade-description">Multiply coins for MORE MONEY!!!</p>
                     <p class="upgrade-cost">10000 coins</p>
                 </button>
+                <h2 class="center">Gamble</h2>
+                <div id="gamble-container" class="sidebar-item center">
+                    <p class="sidebar-item-description">90% of the time doubles your money but 10% chance to lose it all.</p>
+                    <label for="gamble-amount">Amount:</label>
+                    <input type="number" id="gamble-amount" min="0">
+                    <button class="button" id="gamble">Gamble</button>
+                </div>
             </aside>
+
             <div class="content">
                 <div class="background center">
                     <h1>Welcome to Antique coin clicker</h1>
@@ -72,6 +80,12 @@
                 <h2>Fun Fact</h2>
                 <p id="fun-fact"></p>
                 <button class="button" id="close-fact-modal">OK . . .</button>
+            </div>
+        </div>
+        <div class="modal-container" id="general-modal-container">
+            <div class="modal" id="general-modal">
+                <p id="modal-info"></p>
+                <button class="button" id="close-general-modal">Close</button>
             </div>
         </div>
     </body>

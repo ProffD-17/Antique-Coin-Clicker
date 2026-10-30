@@ -1,3 +1,7 @@
+/* ========================================
+   GLOBAL RESET & DEFAULT STYLES
+======================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,10 +9,20 @@
     font-family: "Charm", cursive;
 }
 
+
+/* ========================================
+   MAIN WRAPPER
+======================================== */
+
 .app {
     display: flex;
     min-height: 100vh;
 }
+
+
+/* ========================================
+   UPGRADE MENU TOGGLE BUTTON
+======================================== */
 
 .upgrade-menu-toggle {
 	display: none;
@@ -22,8 +36,12 @@
 	cursor: pointer;
 }
 
-.upgrade-icon
-{
+
+/* ========================================
+   UPGRADE MENU ICON
+======================================== */
+
+.upgrade-icon {
 	position: relative;
 	top: calc(50% - 2px);
 	left: 50%;
@@ -46,31 +64,41 @@
 .upgrade-icon > span {
     transform: rotate(90deg);
 }
+
 .upgrade-icon > span::before {
   content: '';
   top: -8px;
   transform: rotate(-45deg) translate(-4px, -2px);
   width: 20px;
 }
+
 .upgrade-icon > span::after {
   content: '';
   top: 8px;
   transform: rotate(45deg) translate(-4px, 2px);
   width: 20px;
 }
+
 .upgrade-menu-toggle.is-active .upgrade-icon > span {
   transform: rotate(45deg);
 }
+
 .upgrade-menu-toggle.is-active .upgrade-icon > span::before {
   top: 0;
   transform: rotate(0deg) translate(0px, 0px);
   width: 100%;
 }
+
 .upgrade-menu-toggle.is-active .upgrade-icon > span::after {
   top: 0;
   transform: rotate(90deg) translate(0px, 0px);
   width: 100%;
 }
+
+
+/* ========================================
+   RESPONSIVE SIDEBAR
+======================================== */
 
 .sidebar {
     flex: 1 1 0;
@@ -101,6 +129,7 @@
 		max-width: 300px;
 		transition: 0.2s linear;
         z-index: 2;
+        overflow-y: scroll;
 	}
 
 	.sidebar.is-active {
@@ -108,10 +137,27 @@
 	}
 }
 
+@media (max-width: 1024px) {
+    .sidebar {
+        max-width: 200px;
+    }
+}
+
+
+
+/* ========================================
+   CENTRED CONTENT
+======================================== */
+
 .center {
     margin: 0 auto;
     text-align: center;
 }
+
+
+/* ========================================
+   MAIN CONTENT AREA
+======================================== */
 
 .content {
     flex: 1 1 0;
@@ -122,6 +168,11 @@
     align-items: center;
     background-image: url('images/background.jpg');
 }
+
+
+/* ========================================
+   BACKGROUND SECTIONS
+======================================== */
 
 .background {
     width: 70%;
@@ -134,18 +185,20 @@
     border: 5px solid #3E0061;
 }
 
-@media (max-width: 1024px) {
-    .sidebar {
-        max-width: 200px;
-    }
-}
 
-.upgrade {
+
+/* ========================================
+   UPGRADES & SIDEBAR ITEMS
+======================================== */
+
+.upgrade, .sidebar-item {
     display: block;
     width: 80%;
     margin: 10px auto;
     background-color: #D9B55F;
     border-radius: 5px;
+    border: 2px solid black;
+    padding: 5px;
 }
 
 .upgrade:hover {
@@ -156,7 +209,28 @@
     font-weight: 700;
 }
 
+.upgrade-description, .sidebar-item-description {
+    font-size: 0.75rem;
+}
 
+
+/* ========================================
+   GAMBLING FEATURE
+======================================== */
+
+#gamble-container label {
+    font-weight: 700;
+}
+
+#gamble-container input {
+    width: 100%;
+}
+
+
+
+/* ========================================
+   COIN IMAGE
+======================================== */
 
 #coin-img {
     object-fit: contain;
@@ -174,6 +248,11 @@
     transform: scale(0.9);
 }
 
+
+/* ========================================
+   COIN COUNTER
+======================================== */
+
 #coin-number-text {
     font-size: 2rem;
     background-color: whitesmoke;
@@ -181,6 +260,11 @@
     border-radius: 15px;
     padding: 5px;
 }
+
+
+/* ========================================
+   COIN CONTAINER
+======================================== */
 
 .coin-container {
     background-color: white;
@@ -190,6 +274,10 @@
     border: 5px solid gray;
 }
 
+
+/* ========================================
+   MODAL OVERLAY
+======================================== */
 
 .modal-container {
     background-color: rgba(0, 0, 0, 0.2);
@@ -208,6 +296,11 @@
     display: flex;
     z-index: 3;
 }
+
+
+/* ========================================
+   MODAL CONTENT
+======================================== */
 
 .modal {
     width: 600px;
@@ -231,6 +324,11 @@
     margin: 5px auto;
 }
 
+
+/* ========================================
+   BUTTONS
+======================================== */
+
 .button {
     padding: 5px;
     margin: 5px auto;
@@ -243,6 +341,11 @@
 .button:hover {
     background-color: #496C85;
 }
+
+
+/* ========================================
+   FOOTER
+======================================== */
 
 footer {
     color: white;
