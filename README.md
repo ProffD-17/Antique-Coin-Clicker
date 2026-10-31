@@ -1,4 +1,6 @@
-To play:
+Antique Coin Clicker
+
+How to play:
 1. click on the coin to get coins
 2. buy upgrades from the upgrade menu to click for you and increase your profits
 3. gamble it all away
