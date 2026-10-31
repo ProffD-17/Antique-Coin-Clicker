@@ -102,7 +102,7 @@ function update_coins(coins=coin_counter, element=coin_number) {
     }
     if (sufix_index >= suffixes.length) {
         element.innerHTML = 'Too many to count, You win 🪙';
-        show_modal('You win', 'Basicly there are too many coins to count so this is the end of the game');
+        show_modal('You win', 'Basically there are too many coins to count so this is the end of the game');
         return;
     }
     duplicite = Math.round(duplicite * 100) / 100; // round to 2d.p.
