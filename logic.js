@@ -1,7 +1,7 @@
 // LOGIC FOR UPGRADES, CLICKING, GAMBLING, MODALS
 
 // general variables
-const START_COINS = 0;
+const START_COINS = 1000000000000000000000000000000000000000000000000000000000000000;
 let coin_counter = START_COINS;
 let coin_increment = 1;
 let multiplier = 1;
@@ -90,10 +90,10 @@ coin_img.addEventListener('click', () => {
 });
 
 
-suffixes = ['', 'K', 'M', 'B', 'T', 'Qu', 'Qi', 'Sex', 'Sep', 'Oct', 'Non', 'Dec', 'Und', 'Duod', 'Tred', 'Quattuord', 'Quind', 'Sexd', 'Septend', 'Octod', 'Novemd', 'Vig', 'Unvig', 'Duovig', 'Tresvig', 'Quattuorvig', 'Quinvig', 'Sexvig', 'Septenvig', 'Octovig', 'Novemvig', 'Trig'];
+let suffixes = ['', 'K', 'M', 'B', 'T', 'Qu', 'Qi', 'Sex', 'Sep', 'Oct', 'Non', 'Dec', 'Und', 'Duod', 'Tred', 'Quattuord', 'Quind', 'Sexd', 'Septend', 'Octod', 'Novemd', 'Vig', 'Unvig', 'Duovig', 'Tresvig', 'Quattuorvig', 'Quinvig', 'Sexvig', 'Septenvig', 'Octovig', 'Novemvig', 'Trig'];
 
 // updates the coin number on screen
-function update_coins(coins=coin_counter, update_this=coin_number) {
+function update_coins(coins=coin_counter, element=coin_number) {
     let duplicite = coins;
     let sufix_index = 0;
     while (duplicite >= 1000) {
@@ -101,16 +101,17 @@ function update_coins(coins=coin_counter, update_this=coin_number) {
         sufix_index ++;
     }
     if (sufix_index >= suffixes.length) {
-        update_this.innerHTML = 'Too many to count, You win';
+        element.innerHTML = 'Too many to count, You win 🪙';
+        show_modal('You win', 'Basicly there are too many coins to count so this is the end of the game');
         return;
     }
     duplicite = Math.round(duplicite * 100) / 100; // round to 2d.p.
-    update_this.innerHTML = `${duplicite} ${suffixes[sufix_index]}`;
+    element.innerHTML = `${duplicite} ${suffixes[sufix_index]}`;
 }
 update_coins();
 
 
-// UPGRADE MENU TOGGLE
+// UPGRADE MENU TOGGLE FOR MOBILE
 const upgrade_menue_toggle =document.querySelector('.upgrade-menu-toggle');
 const sidebar = document.querySelector('.sidebar');
 
@@ -150,7 +151,7 @@ older_coin_upgrade.addEventListener('click', () => {
         coin_increment *= 10;
         older_coin_upgrade_cost *= 10;
         update_coins(older_coin_upgrade_cost, older_coin_upgrade_cost_text);
-        older_coin_upgrade_title.innerHTML = `Older Coin ${coin_level + 1}`
+        older_coin_upgrade_title.innerHTML = `Older Coin ${coin_level}`
 
         if (coin_level === COIN_IMGS - 1) {
             older_coin_upgrade_cost_text.innerHTML = 'Max level';
@@ -185,7 +186,7 @@ auto_clicker_upgrade_button.addEventListener('click', () => {
         update_coins(auto_clicker_upgrade_cost, auto_clicker_upgrade_cost_text);
 
         auto_clicker_level ++;
-        auto_clicker_upgrade_title.innerHTML =`Goblin ${auto_clicker_level + 1}`;
+        auto_clicker_upgrade_title.innerHTML =`Goblin ${auto_clicker_level}`;
 
         if (auto_clicker_increment > 0) {
             auto_clicker_increment *= 10;
@@ -199,11 +200,51 @@ auto_clicker_upgrade_button.addEventListener('click', () => {
     }
 });
 
-// every second add the autoclicker profits
-setInterval(() => {
-    coin_counter += auto_clicker_increment * multiplier;
-    update_coins();
-}, auto_clicker_delay);
+// upgrade 5 - goblin coffee
+// makes the autoclicker delay smaller
+const goblin_coffee_upgrade_button = document.querySelector('#goblin-coffee-upgrade');
+const goblin_coffee_upgrade_title = document.querySelector('#goblin-coffee-upgrade .upgrade-title');
+const goblin_coffee_upgrade_cost_text = document.querySelector('#goblin-coffee-upgrade .upgrade-cost');
+
+let goblin_coffee_upgrade_cost = 10;
+let goblin_coffee_upgrade_level = 0;
+let goblin_coffee_maxed = false;
+const GOBLIN_COFFEE_UPGRADE_MAX_LEVEL = 19; // starts at 1000ms and -50ms each time so min is 50ms for the click delay
+
+goblin_coffee_upgrade_button.addEventListener('click', () => {
+    if (coin_counter >= goblin_coffee_upgrade_cost && !goblin_coffee_maxed) {
+        // make autoclicker quicker
+        auto_clicker_delay -= 50;
+        reset_auto_clicker();
+        // make it more expensive
+        goblin_coffee_upgrade_cost *= 10;
+        update_coins(goblin_coffee_upgrade_cost, goblin_coffee_upgrade_cost_text);
+        // update the title
+        goblin_coffee_upgrade_level ++;
+        goblin_coffee_upgrade_title.innerHTML = `Goblin Coffee ${goblin_coffee_upgrade_level}`;
+        // make sure it cant go to 0 delay
+        if (goblin_coffee_upgrade_level === GOBLIN_COFFEE_UPGRADE_MAX_LEVEL) {
+            goblin_coffee_maxed = true;
+            update_coins('Max', goblin_coffee_upgrade_cost_text);
+        }
+    }
+});
+
+
+// restart the setInterval function to update the interval
+let auto_clicker_interval;
+
+function reset_auto_clicker() {
+    clearInterval(auto_clicker_interval);
+
+    auto_clicker_interval = setInterval(() => {
+        coin_counter += auto_clicker_increment * multiplier;
+        update_coins();
+        console.log('clicked');
+    }, auto_clicker_delay);
+}
+
+reset_auto_clicker();
 
 
 // upgrade 3 - coin multiplier
@@ -289,19 +330,20 @@ gamble_win_chance_upgrade.addEventListener('click', () => {
     if (coin_counter >= gamble_win_chance_upgrade_cost) {
         // exit if max chance reached
         if (win_chance >= WIN_CHANCE_MAX/100) {
-            gamble_win_chance_upgrade_cost_text.innerHTML = 'MAX';
             return;
         }
-
-        // cost
+        // take bet
         coin_counter -= gamble_win_chance_upgrade_cost;
         update_coins();
-        gamble_win_chance_upgrade_cost *= 10;
-        update_coins(gamble_win_chance_upgrade_cost, gamble_win_chance_upgrade_cost_text);
-
         // change chance +1%
         win_chance += 1/100;
         update_win_chance();
+        // update cost
+        gamble_win_chance_upgrade_cost *= 10;
+        update_coins(gamble_win_chance_upgrade_cost, gamble_win_chance_upgrade_cost_text);
+        if (win_chance >= WIN_CHANCE_MAX/100) {
+            gamble_win_chance_upgrade_cost_text.innerHTML = 'MAX';
+        }
     } else {
         show_broke_modal();
     }
