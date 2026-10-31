@@ -1,0 +1,358 @@
+/* ========================================
+   GLOBAL RESET & DEFAULT STYLES
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Charm", cursive;
+}
+
+
+/* ========================================
+   MAIN WRAPPER
+======================================== */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ========================================
+   UPGRADE MENU TOGGLE BUTTON
+======================================== */
+
+.upgrade-menu-toggle {
+	display: none;
+	position: fixed;
+	top: 2rem;
+	right: 2rem;
+	width: 60px;
+	height: 60px;
+	border-radius: 99px;
+	background-color: #2e3047;
+	cursor: pointer;
+}
+
+
+/* ========================================
+   UPGRADE MENU ICON
+======================================== */
+
+.upgrade-icon {
+	position: relative;
+	top: calc(50% - 2px);
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 32px;
+}
+
+.upgrade-icon > span,
+.upgrade-icon > span::before,
+.upgrade-icon > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background-color: #FFF;
+  transition-duration: .25s;
+}
+
+.upgrade-icon > span {
+    transform: rotate(90deg);
+}
+
+.upgrade-icon > span::before {
+  content: '';
+  top: -8px;
+  transform: rotate(-45deg) translate(-4px, -2px);
+  width: 20px;
+}
+
+.upgrade-icon > span::after {
+  content: '';
+  top: 8px;
+  transform: rotate(45deg) translate(-4px, 2px);
+  width: 20px;
+}
+
+.upgrade-menu-toggle.is-active .upgrade-icon > span {
+  transform: rotate(45deg);
+}
+
+.upgrade-menu-toggle.is-active .upgrade-icon > span::before {
+  top: 0;
+  transform: rotate(0deg) translate(0px, 0px);
+  width: 100%;
+}
+
+.upgrade-menu-toggle.is-active .upgrade-icon > span::after {
+  top: 0;
+  transform: rotate(90deg) translate(0px, 0px);
+  width: 100%;
+}
+
+
+/* ========================================
+   RESPONSIVE SIDEBAR
+======================================== */
+
+.sidebar {
+    flex: 1 1 0;
+    max-width: 300px;
+    padding: 2rem 1rem;
+    background-image: url('images/old_paper.jpg');
+    border-right: 10px solid #8C2D16;
+}
+
+.sidebar h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 768px) {
+	.upgrade-menu-toggle {
+		display: block;
+	}
+	.content {
+		padding-top: 8rem;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: -300px;
+		height: 100vh;
+		width: 100%;
+		max-width: 300px;
+		transition: 0.2s linear;
+        z-index: 2;
+        overflow-y: scroll;
+	}
+
+	.sidebar.is-active {
+		left: 0;
+	}
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        max-width: 200px;
+    }
+}
+
+
+
+/* ========================================
+   CENTRED CONTENT
+======================================== */
+
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* ========================================
+   MAIN CONTENT AREA
+======================================== */
+
+.content {
+    flex: 1 1 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-image: url('images/background.jpg');
+}
+
+
+/* ========================================
+   BACKGROUND SECTIONS
+======================================== */
+
+.background {
+    width: 70%;
+    margin: 20px auto;
+    background-image: url('images/section_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 15px;
+    border-radius: 15px;
+    border: 5px solid #3E0061;
+}
+
+
+
+/* ========================================
+   UPGRADES & SIDEBAR ITEMS
+======================================== */
+
+.upgrade, .sidebar-item {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+    background-color: #D9B55F;
+    border-radius: 5px;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.upgrade:hover {
+    background-color: #BA9A49;
+}
+
+.upgrade-cost {
+    font-weight: 700;
+}
+
+.upgrade-description, .sidebar-item-description {
+    font-size: 0.75rem;
+}
+
+
+/* ========================================
+   GAMBLING FEATURE
+======================================== */
+
+#gamble-container label {
+    font-weight: 700;
+}
+
+#gamble-container input {
+    width: 100%;
+    border-radius: 5px;
+}
+
+
+
+/* ========================================
+   COIN IMAGE
+======================================== */
+
+#coin-img {
+    object-fit: contain;
+    width: 70%;
+    height: 70%;
+    margin: 25px auto;
+    transform: scale(0.8);
+}
+
+#coin-img:hover {
+    transform: scale(1);
+}
+
+#coin-img:active {
+    transform: scale(0.9);
+}
+
+
+/* ========================================
+   COIN COUNTER
+======================================== */
+
+#coin-number-text {
+    font-size: 2rem;
+    background-color: whitesmoke;
+    border: 5px solid #262626;
+    border-radius: 15px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+
+/* ========================================
+   COIN CONTAINER
+======================================== */
+
+.coin-container {
+    background-color: white;
+    width: 50%;
+    border-radius: 25%;
+    margin: 20px auto;
+    border: 5px solid gray;
+}
+
+
+/* ========================================
+   MODAL OVERLAY
+======================================== */
+
+.modal-container {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.modal-container.show {
+    display: flex;
+    z-index: 3;
+}
+
+
+/* ========================================
+   MODAL CONTENT
+======================================== */
+
+.modal {
+    width: 600px;
+    max-width: 100%;
+    background-color: #FFF;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.modal.show {
+    z-index: 4;
+}
+
+.modal h2 {
+    margin: 0 auto 5px;
+}
+
+.modal p {
+    margin: 5px auto;
+}
+
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+.button {
+    padding: 5px;
+    margin: 5px auto;
+    border-radius: 5px;
+    background-color: #6293B3;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #496C85;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+    color: white;
+}
+
+footer ul {
+    list-style-type: none;
+}
