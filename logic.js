@@ -1,18 +1,18 @@
 // LOGIC FOR UPGRADES, CLICKING, GAMBLING, MODALS
 
 // general variables
-const START_COINS = 1000000000000000000000000000000000000000000000000000000000000000;
+const START_COINS = 0;
 let coin_counter = START_COINS;
 let coin_increment = 1;
 let multiplier = 1;
 
 // MODALS
 
-// MODAL
+// GENERAL MODAL
 const modal_container = document.querySelector('#modal-container');
 const close_modal_button = document.querySelector('#close-modal');
 const modal_text = document.querySelector('#modal-info');
-const modal_title = document.querySelector('#modal-title')
+const modal_title = document.querySelector('#modal-title');
 const modal = document.querySelector('#modal');
 
 
@@ -26,7 +26,7 @@ function close_modal() {
 close_modal_button.addEventListener('click', close_modal);
 // close by clicking anywhere not on the modal
 modal_container.addEventListener('click', close_modal);
-// modal closing when it it clicked by not letting the modal contianer know think it has been clicked
+// dont let the contianer know the modal has been clicked so it doesnt close
 modal.addEventListener('click', (event) => {
     event.stopPropagation();
 });
@@ -78,6 +78,48 @@ function show_broke_modal() {
     show_modal('Your broke', 'Unfortunatley you dont have enough money to complete this action.', 'Close in disapointment');
 }
 
+// TESTER TOOLS MODAL
+
+const TT_modal_container = document.querySelector('#tester-tools-modal-container');
+const close_TT_modal_button = document.querySelector('#close-tester-tools-modal');
+const TT_modal = document.querySelector('#tester-tools-modal');
+const change_coins_input = document.querySelector('#change-coins-input');
+const change_coins_btn = document.querySelector('#change-coins-btn');
+const open_TT_btn = document.querySelector('#open-tester-tools');
+
+// OPEN TT modal with button
+open_TT_btn.addEventListener('click', () => {
+    TT_modal_container.classList.add('show');
+});
+
+// CLOSE TT modal
+function close_TT_modal() {
+    TT_modal_container.classList.remove('show');
+}
+// close with button
+close_TT_modal_button.addEventListener('click', close_TT_modal);
+// close by clicking anywhere off the modal
+TT_modal_container.addEventListener('click', close_TT_modal);
+// dont let the container know if the modal has been clicked so it doesnt close
+TT_modal.addEventListener('click', (event) => {
+    event.stopPropagation();
+});
+
+// set coins
+change_coins_btn.addEventListener('click', () => {
+    let desired_coins = change_coins_input.value;
+    if (desired_coins < 0) {
+        show_modal('You cant go into debt', 'Your welcome');
+        return;
+    }
+    coin_counter = parseInt(desired_coins, 10);
+    update_coins();
+});
+
+
+
+
+
 
 // COIN CLICKER
 const coin_img = document.querySelector('#coin-img');
@@ -94,19 +136,23 @@ let suffixes = ['', 'K', 'M', 'B', 'T', 'Qu', 'Qi', 'Sex', 'Sep', 'Oct', 'Non', 
 
 // updates the coin number on screen
 function update_coins(coins=coin_counter, element=coin_number) {
-    let duplicite = coins;
-    let sufix_index = 0;
-    while (duplicite >= 1000) {
-        duplicite /= 1000;
-        sufix_index ++;
+    if (!Number.isFinite(coins) || coins < 0) {
+        element.innerHTML = 'Invalid coin count';
+        return;
     }
-    if (sufix_index >= suffixes.length) {
+    let duplicate = coins;
+    let suffix_index = 0;
+    while (duplicate >= 1000) {
+        duplicate /= 1000;
+        suffix_index ++;
+    }
+    if (suffix_index >= suffixes.length) {
         element.innerHTML = 'Too many to count, You win 🪙';
         show_modal('You win', 'Basically there are too many coins to count so this is the end of the game');
         return;
     }
-    duplicite = Math.round(duplicite * 100) / 100; // round to 2d.p.
-    element.innerHTML = `${duplicite} ${suffixes[sufix_index]}`;
+    duplicate = Math.round(duplicate * 100) / 100; // round to 2d.p.
+    element.innerHTML = `${duplicate} ${suffixes[suffix_index]}`;
 }
 update_coins();
 
@@ -196,7 +242,6 @@ auto_clicker_upgrade_button.addEventListener('click', () => {
         }
     } else {
         show_broke_modal();
-        console.log('your broke');
     }
 });
 
@@ -227,20 +272,21 @@ goblin_coffee_upgrade_button.addEventListener('click', () => {
             goblin_coffee_maxed = true;
             update_coins('Max', goblin_coffee_upgrade_cost_text);
         }
+    } else {
+        show_modal('You cant buy this');
     }
 });
 
 
 // restart the setInterval function to update the interval
-let auto_clicker_interval;
+let auto_clicker;
 
 function reset_auto_clicker() {
-    clearInterval(auto_clicker_interval);
+    clearInterval(auto_clicker);
 
-    auto_clicker_interval = setInterval(() => {
+    auto_clicker = setInterval(() => {
         coin_counter += auto_clicker_increment * multiplier;
         update_coins();
-        console.log('clicked');
     }, auto_clicker_delay);
 }
 
@@ -256,7 +302,6 @@ let multipler_upgrade_cost = 10000;
 
 multiplier_upgrade_button.addEventListener('click', () => {
     if (multipler_upgrade_cost <= coin_counter) {
-        console.log('logic activated');
         coin_counter -= multipler_upgrade_cost;
         update_coins();
 

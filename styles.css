@@ -356,3 +356,12 @@ footer {
 footer ul {
     list-style-type: none;
 }
+
+
+/* ========================================
+   TESTER TOOLS MODAL
+======================================== */
+
+#close-tester-tools-modal {
+    display: block;
+}
