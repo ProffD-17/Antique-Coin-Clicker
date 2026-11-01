@@ -8,7 +8,7 @@ How to play:
 1. click on the coin to get coins
 2. buy upgrades from the upgrade menu to click for you and increase your profits
 3. gamble it all away
-The game ends when you get over 100 Trig(~10^34) or one of the upgrade costs becomes over 100 Trig(~10^34)
+The game ends when you get over 100 Trig(~10^96) or one of the upgrade costs becomes over 100 Trig(~10^96)
 
 I made this game because I wanted to get better at JS since I just learned it and I also like the game cookie clicker.
 The theme is antique coins because it was antique week but I dont know any thing about antique coins so dont take the fun facts to litteraly because they might be wrong.
